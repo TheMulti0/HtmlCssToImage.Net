@@ -1,10 +1,19 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace HtmlCssToImage.Net
 {
-    internal record CreateImageResponse
+    public record CreateImageResponse
     {
         [JsonPropertyName("url")]
-        public string Url { get; init; }
+        public string Url { get; }
+        
+        public string Id { get; }
+
+        public CreateImageResponse(string url)
+        {
+            Url = url;
+            Id = Url.Split("/").Last();
+        }
     }
 }

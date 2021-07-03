@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Net;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace HtmlCssToImage.Net
 {
@@ -29,7 +29,7 @@ namespace HtmlCssToImage.Net
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
         }
 
-        public async Task<string> CreateImageAsync(
+        public async Task<CreateImageResponse> CreateImageAsync(
             CreateImageParameters parameters,
             CancellationToken cancellationToken = default)
         {
@@ -40,18 +40,43 @@ namespace HtmlCssToImage.Net
                 parameters,
                 cancellationToken);
 
-            if (!httpResponse.IsSuccessStatusCode)
-            {
-                var errorResponse = await httpResponse.Content
-                    .ReadFromJsonAsync<ErrorResponse>(cancellationToken: cancellationToken);
-
-                throw new HtmlCssToImageException(errorResponse);
-            }
+            await httpResponse.ThrowIfFailedAsync(cancellationToken);
 
             var response = await httpResponse.Content
                 .ReadFromJsonAsync<CreateImageResponse>(cancellationToken: cancellationToken);
 
-            return response.Url;
+            return response;
+        }
+
+        public async Task<Stream> GetImageAsync(
+            GetImageParameters parameters,
+            CancellationToken cancellationToken = default)
+        {
+            parameters.Validate();
+
+            string query = GetQueryString(parameters);
+
+            string extension = parameters.Format.ToString().ToLower();
+
+            return await _client.GetStreamAsync(
+                $"{ApiEndpoint}/image/{parameters.Id}.{extension}?{query}",
+                cancellationToken);
+        }
+
+        private static string GetQueryString(GetImageParameters parameters)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            
+            if (parameters.Width != null)
+            {
+                query.Add("width", parameters.Width.ToString());
+            }
+            if (parameters.Height != null)
+            {
+                query.Add("height", parameters.Height.ToString());
+            }
+            
+            return query.ToString();
         }
 
         public void Dispose()
