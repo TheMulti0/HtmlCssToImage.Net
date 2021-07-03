@@ -10,7 +10,7 @@ using System.Web;
 
 namespace HtmlCssToImage.Net
 {
-    public class HtmlCssToImageClient : IDisposable
+    public class HtmlCssToImageClient : IHtmlCssToImageClient, IDisposable
     {
         private const string ApiEndpoint = "https://hcti.io/v1";
         private readonly HttpClient _client;
@@ -58,9 +58,13 @@ namespace HtmlCssToImage.Net
 
             string extension = parameters.Format.ToString().ToLower();
 
-            return await _client.GetStreamAsync(
+            var httpResponse = await _client.GetAsync(
                 $"{ApiEndpoint}/image/{parameters.Id}.{extension}?{query}",
                 cancellationToken);
+
+            await httpResponse.ThrowIfFailedAsync(cancellationToken);
+            
+            return await httpResponse.Content.ReadAsStreamAsync(cancellationToken);
         }
 
         private static string GetQueryString(GetImageParameters parameters)
