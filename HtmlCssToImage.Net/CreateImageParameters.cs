@@ -30,7 +30,7 @@ namespace HtmlCssToImage.Net
         public int DelayMilliseconds => (int) Delay.TotalMilliseconds;
         
         [JsonPropertyName("device_scale")]
-        public double DeviceScale { get; init; } = 1;
+        public double DeviceScale { get; init; } = 2;
         
         [JsonPropertyName("render_when_ready")]
         public bool RenderWhenReady { get; init; }
