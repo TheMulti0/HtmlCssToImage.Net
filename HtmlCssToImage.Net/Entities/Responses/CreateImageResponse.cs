@@ -9,7 +9,7 @@ namespace HtmlCssToImage.Net
         /// The created image's url.
         /// This url has no extension, meaning this image will be returned as png.
         /// </summary>
-        /// <seealso cref="GetImageParameters"/>
+        /// <seealso cref="GetImageRequest"/>
         [JsonPropertyName("url")]
         public string Url { get; }
         

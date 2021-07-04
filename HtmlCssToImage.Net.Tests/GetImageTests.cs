@@ -10,7 +10,7 @@ namespace HtmlCssToImage.Net.Tests
         [TestMethod]
         public async Task TestArguments()
         {
-            GetImageParameters[] parameters = {
+            GetImageRequest[] parameters = {
                 new(null),
                 new("123456-abcdef")
                 {

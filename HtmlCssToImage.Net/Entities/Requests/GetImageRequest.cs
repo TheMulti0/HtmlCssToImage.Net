@@ -1,7 +1,7 @@
 
 namespace HtmlCssToImage.Net
 {
-    public record GetImageParameters
+    public record GetImageRequest
     {
         /// <summary>
         /// Desired image's id.
@@ -26,7 +26,7 @@ namespace HtmlCssToImage.Net
         /// </summary>
         public ImageFormat Format { get; init; }
 
-        public GetImageParameters(string id)
+        public GetImageRequest(string id)
         {
             Id = id;
         }

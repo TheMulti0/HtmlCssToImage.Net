@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace HtmlCssToImage.Net
 {
-    public record CreateImageParameters
+    public record CreateImageRequest
     {
         /// <summary>
         /// This is the HTML you want to render. You can send an HTML snippet (<div>Your content</div>) or an entire webpage.
@@ -91,12 +91,12 @@ namespace HtmlCssToImage.Net
         [JsonPropertyName("viewport_height")]
         public int ViewportHeight { get; init; }
 
-        public CreateImageParameters(string html)
+        public CreateImageRequest(string html)
         {
             Html = html;
         }
 
-        public CreateImageParameters(Uri url)
+        public CreateImageRequest(Uri url)
         {
             Url = url;
         }

@@ -9,23 +9,23 @@ namespace HtmlCssToImage.Net
         /// <summary>
         /// Used to generate an image.
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <exception cref="HtmlCssToImageException">Thrown when api response is an error</exception>
         /// <returns></returns>
         Task<CreateImageResponse> CreateImageAsync(
-            CreateImageParameters parameters,
+            CreateImageRequest request,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// After creating an image, use the returned id to download your image.
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <exception cref="HtmlCssToImageException">Thrown when api response is an error</exception>
         /// <returns></returns>
         Task<Stream> GetImageAsync(
-            GetImageParameters parameters,
+            GetImageRequest request,
             CancellationToken cancellationToken = default);
 
         /// <summary>

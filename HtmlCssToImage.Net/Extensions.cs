@@ -9,7 +9,7 @@ namespace HtmlCssToImage.Net
 {
     internal static class Extensions
     {
-        public static void Validate(this CreateImageParameters p)
+        public static void Validate(this CreateImageRequest p)
         {
             if (string.IsNullOrWhiteSpace(p.Html) && p.Url == null)
             {
@@ -22,7 +22,7 @@ namespace HtmlCssToImage.Net
             }
         }
         
-        public static void Validate(this GetImageParameters p)
+        public static void Validate(this GetImageRequest p)
         {
             if (string.IsNullOrWhiteSpace(p.Id))
             {

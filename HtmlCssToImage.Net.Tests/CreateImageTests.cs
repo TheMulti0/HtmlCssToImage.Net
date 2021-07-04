@@ -12,7 +12,7 @@ namespace HtmlCssToImage.Net.Tests
         {
             const string html = "<a>Test</a>";
 
-            await Client.CreateImageAsync(new CreateImageParameters(html));
+            await Client.CreateImageAsync(new CreateImageRequest(html));
         }
         
         [TestMethod]
@@ -20,7 +20,7 @@ namespace HtmlCssToImage.Net.Tests
         {
             const string html = "<a style=\"font-family: \'Festive\', cursive;\">Festive</a>";   
 
-            await Client.CreateImageAsync(new CreateImageParameters(html)
+            await Client.CreateImageAsync(new CreateImageRequest(html)
             {
                 GoogleFonts = new []{ "Festive" }
             });
@@ -31,7 +31,7 @@ namespace HtmlCssToImage.Net.Tests
         {
             const string html = "<a style=\"font-family: \'Festive\', cursive;\">Festive</a>\r\n<a style=\"font-family: \'Oswald\', sans-serif;\">Oswald</a>";   
 
-            await Client.CreateImageAsync(new CreateImageParameters(html)
+            await Client.CreateImageAsync(new CreateImageRequest(html)
             {
                 GoogleFonts = new []{ "Festive", "Oswald" }
             });
@@ -40,13 +40,13 @@ namespace HtmlCssToImage.Net.Tests
         [TestMethod]
         public async Task TestUrl()
         {
-            await Client.CreateImageAsync(new CreateImageParameters(new Uri("https://google.com")));
+            await Client.CreateImageAsync(new CreateImageRequest(new Uri("https://google.com")));
         }
         
         [TestMethod]
         public async Task TestArguments()
         {
-            CreateImageParameters[] parameters = {
+            CreateImageRequest[] parameters = {
                 new(null as Uri),
                 new(null as string),
                 new("https://google.com")
@@ -59,7 +59,7 @@ namespace HtmlCssToImage.Net.Tests
                 }
             };
 
-            foreach (CreateImageParameters parameter in parameters)
+            foreach (CreateImageRequest parameter in parameters)
             {
                 await Assert.ThrowsExceptionAsync<ArgumentException>(
                     () => Client.CreateImageAsync(parameter));

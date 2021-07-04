@@ -30,14 +30,14 @@ namespace HtmlCssToImage.Net
         }
 
         public async Task<CreateImageResponse> CreateImageAsync(
-            CreateImageParameters parameters,
+            CreateImageRequest request,
             CancellationToken cancellationToken = default)
         {
-            parameters.Validate();
+            request.Validate();
 
             HttpResponseMessage httpResponse = await _client.PostAsJsonAsync(
                 $"{ApiEndpoint}/image",
-                parameters,
+                request,
                 cancellationToken);
 
             await httpResponse.EnsureSuccessAsync(cancellationToken);
@@ -47,17 +47,17 @@ namespace HtmlCssToImage.Net
         }
 
         public async Task<Stream> GetImageAsync(
-            GetImageParameters parameters,
+            GetImageRequest request,
             CancellationToken cancellationToken = default)
         {
-            parameters.Validate();
+            request.Validate();
 
-            string query = GetQueryString(parameters);
+            string query = GetQueryString(request);
 
-            string extension = parameters.Format.ToString().ToLower();
+            string extension = request.Format.ToString().ToLower();
 
             var httpResponse = await _client.GetAsync(
-                $"{ApiEndpoint}/image/{parameters.Id}.{extension}?{query}",
+                $"{ApiEndpoint}/image/{request.Id}.{extension}?{query}",
                 cancellationToken);
 
             await httpResponse.EnsureSuccessAsync(cancellationToken);
@@ -76,17 +76,17 @@ namespace HtmlCssToImage.Net
             await httpResponse.EnsureSuccessAsync(cancellationToken);
         }
 
-        private static string GetQueryString(GetImageParameters parameters)
+        private static string GetQueryString(GetImageRequest request)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             
-            if (parameters.Width != null)
+            if (request.Width != null)
             {
-                query.Add("width", parameters.Width.ToString());
+                query.Add("width", request.Width.ToString());
             }
-            if (parameters.Height != null)
+            if (request.Height != null)
             {
-                query.Add("height", parameters.Height.ToString());
+                query.Add("height", request.Height.ToString());
             }
             
             return query.ToString();
