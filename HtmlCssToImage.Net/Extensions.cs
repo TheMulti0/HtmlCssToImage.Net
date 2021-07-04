@@ -10,7 +10,7 @@ namespace HtmlCssToImage.Net
     {
         public static void Validate(this CreateImageParameters p)
         {
-            if (p.Html == null && p.Url == null)
+            if (string.IsNullOrWhiteSpace(p.Html) && p.Url == null)
             {
                 throw new ArgumentException("Html or Url must be set");
             }
@@ -23,9 +23,9 @@ namespace HtmlCssToImage.Net
         
         public static void Validate(this GetImageParameters p)
         {
-            if (p.Id == null)
+            if (string.IsNullOrWhiteSpace(p.Id))
             {
-                throw new NullReferenceException("Id must not be null");
+                throw new ArgumentException("Id must not be null");
             }
             
             if (p.Width != null && (p.Width < 1 || p.Width > 5000))

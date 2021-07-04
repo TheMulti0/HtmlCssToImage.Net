@@ -2,5 +2,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=37333aef_002D5365_002D4fcd_002D83ab_002D418e501066bd/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateImageTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;MSTest::1FAEA084-54A5-45E4-9185-BBEA49D30399::net5.0::HtmlCssToImage.Net.Tests.CreateImageTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::1FAEA084-54A5-45E4-9185-BBEA49D30399::net5.0::HtmlCssToImage.Net.Tests.GetImageTests.TestArguments&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
