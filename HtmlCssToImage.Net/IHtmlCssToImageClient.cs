@@ -8,10 +8,10 @@ namespace HtmlCssToImage.Net
     {
         Task<CreateImageResponse> CreateImageAsync(
             CreateImageParameters parameters,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         Task<Stream> GetImageAsync(
             GetImageParameters parameters,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
     }
 }

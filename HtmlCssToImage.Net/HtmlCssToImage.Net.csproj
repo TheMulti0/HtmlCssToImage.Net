@@ -2,7 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <OutputType>Exe</OutputType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>TheMulti0.HtmlCssToImage.Net</PackageId>
+        <PackageVersion>0.1.0</PackageVersion>
+        <Title>HtmlCssToImage.Net</Title>
+        <Authors>TheMulti0</Authors>
     </PropertyGroup>
 
 </Project>
