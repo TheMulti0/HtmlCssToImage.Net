@@ -40,12 +40,10 @@ namespace HtmlCssToImage.Net
                 parameters,
                 cancellationToken);
 
-            await httpResponse.ThrowIfFailedAsync(cancellationToken);
+            await httpResponse.EnsureSuccessAsync(cancellationToken);
 
-            var response = await httpResponse.Content
+            return await httpResponse.Content
                 .ReadFromJsonAsync<CreateImageResponse>(cancellationToken: cancellationToken);
-
-            return response;
         }
 
         public async Task<Stream> GetImageAsync(
@@ -62,9 +60,20 @@ namespace HtmlCssToImage.Net
                 $"{ApiEndpoint}/image/{parameters.Id}.{extension}?{query}",
                 cancellationToken);
 
-            await httpResponse.ThrowIfFailedAsync(cancellationToken);
+            await httpResponse.EnsureSuccessAsync(cancellationToken);
             
             return await httpResponse.Content.ReadAsStreamAsync(cancellationToken);
+        }
+
+        public async Task DeleteImageAsync(
+            string id,
+            CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage httpResponse = await _client.DeleteAsync(
+                $"{ApiEndpoint}/image/{id}",
+                cancellationToken);
+
+            await httpResponse.EnsureSuccessAsync(cancellationToken);
         }
 
         private static string GetQueryString(GetImageParameters parameters)

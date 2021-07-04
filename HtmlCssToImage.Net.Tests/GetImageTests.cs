@@ -7,7 +7,6 @@ namespace HtmlCssToImage.Net.Tests
     [TestClass]
     public class GetImageTests : HtmlCssToImageTestBase
     {
-        
         [TestMethod]
         public async Task TestArguments()
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,16 +40,47 @@ namespace HtmlCssToImage.Net
             }
         }
 
-        public static async Task ThrowIfFailedAsync(
+        public static async Task EnsureSuccessAsync(
             this HttpResponseMessage response,
             CancellationToken cancellationToken)
         {
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                var errorResponse = await response.Content
-                    .ReadFromJsonAsync<ErrorResponse>(cancellationToken: cancellationToken);
+                return;
+            }
+            
+            try
+            {
+                await WrapErrorResponse(response, cancellationToken);
+            }
+            catch (JsonException)
+            {
+                WrapHttpRequestException(response);
+            }
+        }
 
-                throw new HtmlCssToImageException(errorResponse);
+        private static async Task WrapErrorResponse(HttpResponseMessage response, CancellationToken cancellationToken)
+        {
+            var errorResponse = await response.Content
+                .ReadFromJsonAsync<ErrorResponse>(cancellationToken: cancellationToken);
+
+            throw new HtmlCssToImageException(errorResponse);
+        }
+
+        private static void WrapHttpRequestException(HttpResponseMessage response)
+        {
+            try
+            {
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HtmlCssToImageException(
+                    new ErrorResponse
+                    {
+                        StatusCode = (int) e.StatusCode,
+                        Message = e.Message
+                    });
             }
         }
     }
